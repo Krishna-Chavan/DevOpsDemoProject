@@ -1,8 +1,10 @@
 pipeline {
-  agent any
+  agent any //agent is where our build is going to run
+  //agent { docker {image 'maven:3.6.3' } }
   stages {
      stage("Cleaning Stage") {
       steps {
+      	//bat "mvn --version"
         bat "mvn clean"
       }
     }
@@ -15,18 +17,17 @@ pipeline {
       steps {
         bat "mvn package"
       }
-    }
-    stage("sonarqube stage"){
-       steps {
-         bat "mvn package sonar:sonar"
-       }
-    }
-    stage("Consolidate Results") {
-      steps {
-        input("Do you want to capture results?")
-        junit'**/target/surefire-reports/TEST-*.xml'
-        archive 'target/*.jar'
-      }
-    }
+    } 
+  }
+  post {
+  	always {
+  		bat "run always"
+  	}
+  	success {
+  		bat "run when success"
+  	}
+  	failure {
+  		bat "run when fails"
+  	}	
   }
 }
