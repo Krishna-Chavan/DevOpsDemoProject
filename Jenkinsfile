@@ -17,6 +17,7 @@ pipeline {
       steps {
         bat "mvn package"
       }
+<<<<<<< HEAD
     } 
   }
   post {
@@ -29,5 +30,14 @@ pipeline {
   	failure {
   		bat "run when fails"
   	}	
+=======
+    }
+    stage("sonarqube stage"){
+       steps {
+         bat "mvn package sonar:sonar"
+       }
+    }
+>>>>>>> 68ceea93d3b16dc2c64a91f7ff724f97cd89f7cc
   }
 }
+//webhook
